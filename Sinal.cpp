@@ -1,4 +1,5 @@
 #include "Sinal.h"
+#include "Grafico.h"
 
 Sinal::Sinal(double *sequencia, int comprimento)
 {
@@ -10,14 +11,17 @@ Sinal::~Sinal()
 
 double *Sinal::getSequencia()
 {
-    return nullptr;
+    return sequencia;
 }
 
 int Sinal::getComprimento()
 {
-    return 0;
+    return comprimento;
 }
 
 void Sinal::imprimir(string nomeDoSinal)
 {
+    Grafico *grafico = new Grafico(nomeDoSinal, sequencia, comprimento);
+    grafico->plot();
+    delete grafico;
 }

@@ -1,10 +1,15 @@
 #ifndef SINAL_H
 #define SINAL_H
 
+#include <string>
+using namespace std;
+
 class Sinal
 {
 private:
-    /* data */
+    double *sequencia;
+    int comprimento;
+    string nomeDoSinal;
 public:
     Sinal(double *sequencia, int comprimento);
     virtual ~Sinal();
