@@ -3,6 +3,8 @@
 
 Sinal::Sinal(double *sequencia, int comprimento)
 {
+    this->sequencia = sequencia;
+    this->comprimento = comprimento;
 }
 
 Sinal::~Sinal()
