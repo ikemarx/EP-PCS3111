@@ -3,17 +3,17 @@
 #include "Amplificador.h"
 #include "Integrador.h"
 
-Piloto::Piloto(double ganho) : amplificador(ganho) {
-    
+Piloto::Piloto(double ganho) {
+    amplificador = new Amplificador(ganho);
+    integrador = new Integrador(); // You should initialize integrator appropriately
 }
 
 Piloto::~Piloto() {
-
+    delete amplificador;
+    delete integrador;
 }
 
-Sinal *Piloto::processar(Sinal *sinalIN) {
-    Sinal* sinalOUT = integrador.processar(amplificador.processar(sinalIN));
-    //delete integrador
-    //delete amplificador
+Sinal* Piloto::processar(Sinal* sinalIN) {
+    Sinal* sinalOUT = integrador->processar(amplificador->processar(sinalIN));
     return sinalOUT;
 }

@@ -5,8 +5,8 @@
 
 class Piloto {
 private:
-    Amplificador amplificador;
-    Integrador integrador;
+    Amplificador* amplificador;
+    Integrador* integrador;
 
 public:
     Piloto(double ganho);
