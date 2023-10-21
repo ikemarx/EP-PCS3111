@@ -1,6 +1,7 @@
 #ifndef SINAL_H
 #define SINAL_H
 
+#include "Grafico.h"
 #include <string>
 using namespace std;
 

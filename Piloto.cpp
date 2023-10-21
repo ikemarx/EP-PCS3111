@@ -1,7 +1,4 @@
 #include "Piloto.h"
-#include "Sinal.h"
-#include "Amplificador.h"
-#include "Integrador.h"
 
 Piloto::Piloto(double ganho) {
     amplificador = new Amplificador(ganho);

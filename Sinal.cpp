@@ -1,5 +1,4 @@
 #include "Sinal.h"
-#include "Grafico.h"
 
 Sinal::Sinal(double *sequencia, int comprimento) {
     this->sequencia = new double[comprimento];

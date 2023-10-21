@@ -1,6 +1,5 @@
 #include "ModuloRealimentado.h"
-#include "Sinal.h"
-#include "Piloto.h"
+
 ModuloRealimentado::ModuloRealimentado(double ganho) {
     piloto = new Piloto(ganho);
 }

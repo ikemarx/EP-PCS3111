@@ -1,5 +1,4 @@
 #include "Somador.h"
-#include "Sinal.h"
 
 Somador::Somador() {
 
