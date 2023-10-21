@@ -1,5 +1,4 @@
 #include "Derivador.h"
-#include "Sinal.h"
 
 Derivador::Derivador() {
 

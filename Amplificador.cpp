@@ -1,5 +1,5 @@
 #include "Amplificador.h"
-#include "Sinal.h"
+
 Amplificador::Amplificador(double ganho) {
     this->ganho = ganho;
 }

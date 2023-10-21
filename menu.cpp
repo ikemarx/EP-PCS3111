@@ -14,6 +14,7 @@ Sinal* novoSinal(); // implementarei aqui mesmo pq n vejo onde mais seria
 
 void menu() {
     int simulacao;
+    double ganho;
     cout << "\tSimulink em C++" << endl;
     cout << "Qual simulacao gostaria de fazer?" << endl;
     cout << "1) Piloto Automatico" << endl; 
@@ -24,7 +25,9 @@ void menu() {
     if (simulacao == 1) {
         cout << "Qual o ganho do acelerador?" << endl;
         cout << "g = ";
-        // cin >> ganho; acho q aqui chama o piloto automatico ne
+        cin >> ganho;
+        ModuloRealimentado* pilotoautomatico = new ModuloRealimentado(ganho);
+        pilotoautomatico->processar(sinal)->imprimir("Velocidade do Carro");
     }
 }
 
