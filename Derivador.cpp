@@ -17,5 +17,8 @@ Sinal *Derivador::processar(Sinal *sinalIN) {
         derivado[0] = sequencia[0];
         derivado[i] = sequencia[i + 1] - sequencia[i];
     }
-    
+
+    Sinal* sinalOUT = new Sinal(derivado, sinalIN->getComprimento());
+
+    return sinalOUT;
 }
