@@ -10,5 +10,5 @@ ModuloRealimentado::~ModuloRealimentado() {
 }
 
 Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
-    
+    return nullptr;
 }
