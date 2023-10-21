@@ -22,13 +22,12 @@ ModuloRealimentado::~ModuloRealimentado() {
 }
 
 Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
-    int comprimento = sinalIN->getComprimento();
-    sequenciaSaidaInvertida = new double[comprimento];
+    sequenciaSaidaInvertida = new double[sinalIN->getComprimento()];
     sequenciaSaidaInvertida[0] = vInicial;
-    diferenca = new Sinal(sinalIN->getSequencia(), comprimento);
+    diferenca = new Sinal(sinalIN->getSequencia(), 1);
     saida = piloto->processar(diferenca);
     delete diferenca;
-    for (int i = 1; i < comprimento - 1; i++) {
+    for (int i = 1; i < sinalIN->getComprimento() - 1; i++) {
         inversor->processar(saida);
         sequenciaSaidaInvertida[i] = saida->getSequencia()[i - 1];
         saidaInvertida = new Sinal(sequenciaSaidaInvertida, i + 1);
