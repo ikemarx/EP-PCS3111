@@ -1,14 +1,19 @@
 #include "Piloto.h"
 #include "Sinal.h"
-Piloto::Piloto(double ganho)
-{
+#include "Amplificador.h"
+#include "Integrador.h"
+
+Piloto::Piloto(double ganho) : amplificador(ganho) {
+    
 }
 
-Piloto::~Piloto()
-{
+Piloto::~Piloto() {
+
 }
 
-Sinal *Piloto::processar(Sinal *sinalIN)
-{
-    return nullptr;
+Sinal *Piloto::processar(Sinal *sinalIN) {
+    Sinal* sinalOUT = integrador.processar(amplificador.processar(sinalIN));
+    //delete integrador
+    //delete amplificador
+    return sinalOUT;
 }

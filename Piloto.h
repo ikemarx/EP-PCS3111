@@ -3,7 +3,9 @@
 
 class Piloto {
 private:
-
+    Amplificador amplificador;
+    Integrador integrador;
+    
 public:
     Piloto(double ganho);
     virtual ~Piloto();
