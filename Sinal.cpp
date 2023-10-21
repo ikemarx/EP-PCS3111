@@ -1,32 +1,27 @@
 #include "Sinal.h"
 #include "Grafico.h"
 
-Sinal::Sinal(double *sequencia, int comprimento)
-{
+Sinal::Sinal(double *sequencia, int comprimento) {
     this->sequencia = new double[comprimento];
     for (int i = 0; i < comprimento; i++)
         this->sequencia[i] = sequencia[i];
     this->comprimento = comprimento;
 }
 
-Sinal::~Sinal()
-{
+Sinal::~Sinal() {
     delete[] sequencia;
 }
 
-double *Sinal::getSequencia()
-{
+double* Sinal::getSequencia() {
     return sequencia;
 }
 
-int Sinal::getComprimento()
-{
+int Sinal::getComprimento() {
     return comprimento;
 }
 
-void Sinal::imprimir(string nomeDoSinal)
-{
-    Grafico *grafico = new Grafico(nomeDoSinal, sequencia, comprimento);
+void Sinal::imprimir(string nomeDoSinal) {
+    Grafico* grafico = new Grafico(nomeDoSinal, sequencia, comprimento);
     grafico->plot();
     delete grafico;
 }
