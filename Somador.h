@@ -3,8 +3,6 @@
 
 class Somador
 {
-private:
-    /* data */
 public:
     Somador();
     virtual ~Somador();

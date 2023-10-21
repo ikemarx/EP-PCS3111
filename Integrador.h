@@ -3,8 +3,6 @@
 
 class Integrador
 {
-private:
-    /* data */
 public:
     Integrador();
     virtual ~Integrador();
