@@ -5,10 +5,10 @@
 class ModuloRealimentado {
 private:
     Piloto piloto;
-    Sinal* sinalIN;
-    Sinal* diferenca;
-    Sinal* saida;
-    Sinal* saidaInvertida;
+    Sinal* sinalIN = nullptr;
+    Sinal* diferenca = nullptr;
+    Sinal* saida = nullptr;
+    Sinal* saidaInvertida = nullptr;
     int vInicial = 0;
 
 public:

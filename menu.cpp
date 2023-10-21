@@ -6,6 +6,7 @@
 #include "Piloto.h"
 #include "Sinal.h"
 #include "Somador.h"
+#include <cmath>
 
 void menu() {
 

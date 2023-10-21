@@ -14,7 +14,7 @@ Sinal *Derivador::processar(Sinal *sinalIN) {
     double* sequencia = sinalIN->getSequencia();
     derivado[0] = sequencia[0];
     
-    for (int i = 1; i < sinalIN->getComprimento() - 1; i++) {
+    for (int i = 1; i < (sinalIN->getComprimento()) - 1; i++) {
         derivado[i] = sequencia[i + 1] - sequencia[i];
     }
 
