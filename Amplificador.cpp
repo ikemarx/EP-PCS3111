@@ -1,23 +1,29 @@
 #include "Amplificador.h"
 #include "Sinal.h"
-Amplificador::Amplificador(double ganho)
-{
+Amplificador::Amplificador(double ganho) {
+    this->ganho = ganho;
 }
 
-Amplificador::~Amplificador()
-{
+Amplificador::~Amplificador() {
+
 }
 
-Sinal *Amplificador::processar(Sinal *sinalIN)
-{
-    return nullptr;
+Sinal *Amplificador::processar(Sinal *sinalIN) {
+    double* sequenciaAmplificada = new double[sinalIN->getComprimento()];
+    double* sequencia = sinalIN->getSequencia();
+    for (int i = 0; i < sinalIN->getComprimento(); i++) {
+        sequenciaAmplificada[i] = sequencia[i] * ganho;
+    } 
+
+    Sinal* sinalOUT = new Sinal(sequenciaAmplificada, sinalIN->getComprimento());
+
+    return sinalOUT;
 }
 
-void Amplificador::setGanho(double ganho)
-{
+void Amplificador::setGanho(double ganho) {
+    this->ganho = ganho;
 }
 
-double Amplificador::getGanho()
-{
-    return 0.0;
+double Amplificador::getGanho() {
+    return ganho;
 }
