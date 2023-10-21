@@ -1,24 +1,34 @@
 #include "ModuloRealimentado.h"
 
 ModuloRealimentado::ModuloRealimentado(double ganho) {
+    inversor = new Amplificador(-1.0);
+    somador = new Somador();
     piloto = new Piloto(ganho);
+    diferenca = nullptr;
+    saida = nullptr;
+    saidaInvertida = nullptr;
+    vInicial = 0;
+    sequenciaSaidaInvertida = nullptr;
 }
 
 ModuloRealimentado::~ModuloRealimentado() {
-    delete sequenciaSaidaInvertida;
-    delete somador;
     delete inversor;
+    delete somador;
+    delete piloto;
+    delete diferenca;
+    delete saida;
+    delete saidaInvertida;
+    delete[] sequenciaSaidaInvertida;
 }
 
 Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
-    inversor = new Amplificador(-1.0);
-    somador = new Somador();
-    sequenciaSaidaInvertida = new double[sinalIN->getComprimento()];
+    int comprimento = sinalIN->getComprimento();
+    sequenciaSaidaInvertida = new double[comprimento];
     sequenciaSaidaInvertida[0] = vInicial;
-    diferenca = new Sinal(sinalIN->getSequencia(), 1);
+    diferenca = new Sinal(sinalIN->getSequencia(), comprimento);
     saida = piloto->processar(diferenca);
     delete diferenca;
-    for (int i = 1; i < sinalIN->getComprimento() - 1; i++) {
+    for (int i = 1; i < comprimento - 1; i++) {
         inversor->processar(saida);
         sequenciaSaidaInvertida[i] = saida->getSequencia()[i - 1];
         saidaInvertida = new Sinal(sequenciaSaidaInvertida, i + 1);

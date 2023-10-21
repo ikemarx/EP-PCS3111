@@ -8,10 +8,10 @@ private:
     Amplificador* inversor;
     Somador* somador;
     Piloto* piloto;
-    Sinal* diferenca = nullptr;
-    Sinal* saida = nullptr;
-    Sinal* saidaInvertida = nullptr;
-    int vInicial = 0;
+    Sinal* diferenca;
+    Sinal* saida;
+    Sinal* saidaInvertida;
+    int vInicial;
     double* sequenciaSaidaInvertida;
 public:
     ModuloRealimentado(double ganho);
