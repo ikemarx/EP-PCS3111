@@ -1,10 +1,8 @@
 #ifndef DERIVADOR_H
 #define DERIVADOR_H
 
-class Derivador
-{
-private:
-    /* data */
+class Derivador {
+
 public:
     Derivador();
     virtual ~Derivador();
