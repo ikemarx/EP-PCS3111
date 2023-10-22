@@ -8,7 +8,6 @@ ModuloRealimentado::ModuloRealimentado(double ganho) {
     saida = nullptr;
     saidaInvertida = nullptr;
     vInicial = 0;
-    sequenciaSaidaInvertida = nullptr;
 }
 
 ModuloRealimentado::~ModuloRealimentado() {
