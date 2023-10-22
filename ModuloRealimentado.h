@@ -5,14 +5,6 @@
 
 class ModuloRealimentado {
 protected:
-    Amplificador* inversor;
-    Somador* somador;
-    Piloto* piloto;
-    Sinal* diferenca;
-    Sinal* saida;
-    Sinal* saidaInvertida;
-    int vInicial;
-    double* sequenciaSaidaInvertida;
     double ganho;
 public:
     ModuloRealimentado(double ganho);

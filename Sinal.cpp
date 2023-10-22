@@ -8,15 +8,14 @@ Sinal::Sinal(double *sequencia, int comprimento) {
 }
 
 Sinal::~Sinal() {
-    delete[] sequencia;
 }
 
 double* Sinal::getSequencia() {
-    return sequencia;
+    return this->sequencia;
 }
 
 int Sinal::getComprimento() {
-    return comprimento;
+    return this->comprimento;
 }
 
 void Sinal::imprimir(string nomeDoSinal) {

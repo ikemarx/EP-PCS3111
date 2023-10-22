@@ -26,5 +26,5 @@ void Amplificador::setGanho(double ganho) {
 }
 
 double Amplificador::getGanho() {
-    return ganho;
+    return this->ganho;
 }
