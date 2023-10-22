@@ -11,24 +11,27 @@
 using namespace std;
 
 Sinal* novoSinal(); // implementarei aqui mesmo pq n vejo onde mais seria
+void novaOperacao(Sinal *sinalIN);
 
 void menu() {
-    int simulacao;
+    int escolha;
     double ganho;
     cout << "\tSimulink em C++" << endl;
     cout << "Qual simulacao gostaria de fazer?" << endl;
     cout << "1) Piloto Automatico" << endl; 
     cout << "2) Sua propria sequencia de operacoes" << endl;
     cout << "Escolha: ";
-    cin >> simulacao;
+    cin >> escolha;
     Sinal *sinal = novoSinal();
-    if (simulacao == 1) {
+    if (escolha == 1) {
         cout << "Qual o ganho do acelerador?" << endl;
         cout << "g = ";
         cin >> ganho;
         ModuloRealimentado* pilotoautomatico = new ModuloRealimentado(ganho);
         pilotoautomatico->processar(sinal)->imprimir("Velocidade do Carro");
     }
+    if (escolha == 2)
+        novaOperacao(sinal);
 }
 
 // implementacao de novoSinal conforme item 3.4
@@ -60,6 +63,48 @@ Sinal *novoSinal() {
         for (int i = 0; i < 59; i++)
             sequencia[i] = i * a;
     }
-    Sinal *sinal = new Sinal(sequencia, 60);
-    return sinal;
+    return new Sinal(sequencia, 60);
+}
+
+void novaOperacao(Sinal *sinalIN) {
+    int escolha;
+    double ganho;
+    Sinal* sinal2;
+    cout << "Qual operacao voce gostaria de fazer?" << endl;
+    cout << "1) Amplificar" << endl;
+    cout << "2) Somar" << endl;
+    cout << "3) Derivar" << endl;
+    cout << "4) Integrar" << endl;
+    cout << "Escolha: ";
+    cin >> escolha;
+    if (escolha == 1) {
+        cout << "Qual o ganho dessa amplificacao?" << endl;
+        cout << "g = ";
+        cin >> ganho;
+        Amplificador* amplificador = new Amplificador(ganho);
+        sinalIN = amplificador->processar(sinalIN);
+    }
+    if (escolha == 2) {
+        cout << "Informe mais um sinal para ser somado." << endl;
+        sinal2 = novoSinal();
+        Somador* somador = new Somador();
+        sinalIN = somador->processar(sinal2, sinalIN);
+    }
+    if (escolha == 3) {
+        Derivador* derivador = new Derivador();
+        sinalIN = derivador->processar(sinalIN);
+    }
+    if (escolha == 4) {
+        Integrador* integrador = new Integrador();
+        sinalIN = integrador->processar(sinalIN);
+    }
+    cout << "O que voce quer fazer agora?" << endl;
+    cout << "1) Realizar mais uma operacao no resultado" << endl;
+    cout << "2) Imprimir o resultado para terminar" << endl;
+    cout << "Escolha: ";
+    cin >> escolha;
+    if (escolha == 2)
+        sinalIN->imprimir("Resultado Final");
+    if (escolha == 1)
+        novaOperacao(sinalIN);
 }
