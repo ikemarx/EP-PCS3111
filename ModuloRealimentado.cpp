@@ -1,6 +1,7 @@
 #include "ModuloRealimentado.h"
 
 ModuloRealimentado::ModuloRealimentado(double ganho) {
+    this->ganho = ganho;
     inversor = new Amplificador(-1.0);
     somador = new Somador();
     piloto = new Piloto(ganho);
@@ -23,7 +24,7 @@ ModuloRealimentado::~ModuloRealimentado() {
 
 Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
     sequenciaSaidaInvertida = new double[sinalIN->getComprimento()];
-    sequenciaSaidaInvertida[0] = vInicial;
+    /* sequenciaSaidaInvertida[0] = vInicial;
     diferenca = new Sinal(sinalIN->getSequencia(), 1);
     saida = piloto->processar(diferenca);
     delete diferenca;
@@ -36,5 +37,11 @@ Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
         delete saidaInvertida;
         delete diferenca;
     }
-    return saida;
+    return saida; */
+    sequenciaSaidaInvertida[0] = ganho * sinalIN->getSequencia()[0];
+    for (int i = 1; i < sinalIN->getComprimento(); i++) {
+        sequenciaSaidaInvertida[i] = ((sinalIN->getSequencia()[i] - sequenciaSaidaInvertida[i - 1]) * ganho) + sequenciaSaidaInvertida[i - 1];
+    }
+    Sinal* sinalOUT = new Sinal(sequenciaSaidaInvertida, sinalIN->getComprimento());
+    return sinalOUT;
 }

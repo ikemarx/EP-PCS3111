@@ -29,6 +29,7 @@ void menu() {
         cin >> ganho;
         ModuloRealimentado* pilotoautomatico = new ModuloRealimentado(ganho);
         pilotoautomatico->processar(sinal)->imprimir("Velocidade do Carro");
+        delete pilotoautomatico;
     }
     if (escolha == 2)
         novaOperacao(sinal);
@@ -103,8 +104,10 @@ void novaOperacao(Sinal *sinalIN) {
     cout << "2) Imprimir o resultado para terminar" << endl;
     cout << "Escolha: ";
     cin >> escolha;
-    if (escolha == 2)
+    if (escolha == 2) {
         sinalIN->imprimir("Resultado Final");
+        delete sinalIN;
+    }
     if (escolha == 1)
         novaOperacao(sinalIN);
 }

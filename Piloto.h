@@ -4,10 +4,10 @@
 #include "Integrador.h"
 
 class Piloto {
-private:
+protected:
     Amplificador* amplificador;
     Integrador* integrador;
-
+    double ganho;
 public:
     Piloto(double ganho);
     virtual ~Piloto();

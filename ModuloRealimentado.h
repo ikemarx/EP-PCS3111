@@ -4,7 +4,7 @@
 #include "Somador.h"
 
 class ModuloRealimentado {
-private:
+protected:
     Amplificador* inversor;
     Somador* somador;
     Piloto* piloto;
@@ -13,6 +13,7 @@ private:
     Sinal* saidaInvertida;
     int vInicial;
     double* sequenciaSaidaInvertida;
+    double ganho;
 public:
     ModuloRealimentado(double ganho);
     virtual ~ModuloRealimentado();

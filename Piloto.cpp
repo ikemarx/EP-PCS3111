@@ -1,8 +1,7 @@
 #include "Piloto.h"
 
 Piloto::Piloto(double ganho) {
-    amplificador = new Amplificador(ganho);
-    integrador = new Integrador();
+    this->ganho = ganho;
 }
 
 Piloto::~Piloto() {
@@ -11,6 +10,8 @@ Piloto::~Piloto() {
 }
 
 Sinal* Piloto::processar(Sinal* sinalIN) {
+    amplificador = new Amplificador(ganho);
+    integrador = new Integrador();
     Sinal* sinalOUT = integrador->processar(amplificador->processar(sinalIN));
     return sinalOUT;
 }

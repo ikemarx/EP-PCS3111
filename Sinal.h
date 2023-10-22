@@ -7,7 +7,7 @@ using namespace std;
 
 class Sinal
 {
-private:
+protected:
     double *sequencia;
     int comprimento;
     string nomeDoSinal;
