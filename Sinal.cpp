@@ -7,6 +7,10 @@ Sinal::Sinal(double *sequencia, int comprimento) {
     this->comprimento = comprimento;
 }
 
+Sinal::Sinal(double constante, int comprimento)
+{
+}
+
 Sinal::~Sinal() {
 }
 
@@ -22,4 +26,12 @@ void Sinal::imprimir(string nomeDoSinal) {
     Grafico* grafico = new Grafico(nomeDoSinal, sequencia, comprimento);
     grafico->plot();
     delete grafico;
+}
+
+void Sinal::imprimir()
+{
+}
+
+void Sinal::imprimir(int tamanho)
+{
 }
