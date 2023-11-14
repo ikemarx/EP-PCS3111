@@ -1,3 +1,3 @@
 # EP-PCS3111
-## Escola politéctnica da Universidade de São Paulo
+## Escola Politécnica da Universidade de São Paulo
 ### 2023
