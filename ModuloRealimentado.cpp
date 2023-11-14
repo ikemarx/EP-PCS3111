@@ -1,10 +1,11 @@
 #include "ModuloRealimentado.h"
 
-ModuloRealimentado::ModuloRealimentado(double ganho) {
-    this->ganho = ganho;
+ModuloRealimentado::ModuloRealimentado()
+{
 }
 
-ModuloRealimentado::~ModuloRealimentado() {
+ModuloRealimentado::~ModuloRealimentado()
+{
 }
 
 Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {

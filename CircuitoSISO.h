@@ -2,8 +2,9 @@
 #define CIRCUITOSISO_H
 
 #include "Sinal.h"
+#include "Circuito.h"
 
-class CircuitoSISO
+class CircuitoSISO : public Circuito
 {
 private:
     

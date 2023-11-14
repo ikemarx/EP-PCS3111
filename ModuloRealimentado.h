@@ -1,15 +1,13 @@
 #ifndef MODULOREALIMENTADO_H
 #define MODULOREALIMENTADO_H
-#include "Piloto.h"
-#include "Somador.h"
+#include "Modulo.h"
 
-class ModuloRealimentado {
+class ModuloRealimentado : public Modulo {
 protected:
-    double ganho;
+
 public:
-    ModuloRealimentado(double ganho);
+    ModuloRealimentado();
     virtual ~ModuloRealimentado();
-    Sinal* processar(Sinal* sinalIN);
 };
 
 #endif
