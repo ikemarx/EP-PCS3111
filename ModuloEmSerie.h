@@ -10,6 +10,8 @@ private:
 public:
     ModuloEmSerie();
     virtual ~ModuloEmSerie();
+
+    Sinal* processar(Sinal* sinalIN);
 };
 
 #endif

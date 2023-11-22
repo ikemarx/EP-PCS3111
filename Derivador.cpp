@@ -7,7 +7,7 @@ Derivador::Derivador() {
 Derivador::~Derivador() {
 }
 
-Sinal* processar(Sinal *sinalIN) {
+Sinal* Derivador::processar(Sinal *sinalIN) {
     double* derivado = sinalIN->getSequencia();
     double* sequencia = sinalIN->getSequencia();
     for (int i = 0; i < sinalIN->getComprimento(); i++) {

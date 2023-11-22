@@ -7,6 +7,8 @@ class Derivador : public CircuitoSISO{
 public:
     Derivador();
     virtual ~Derivador();
+
+    Sinal *processar(Sinal *sinalIN);
 };
 
 #endif

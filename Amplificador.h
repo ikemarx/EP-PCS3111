@@ -10,6 +10,8 @@ public:
     virtual ~Amplificador();
     void setGanho(double ganho);
     double getGanho();
+
+    Sinal *processar(Sinal *sinalIN);
 };
 
 #endif

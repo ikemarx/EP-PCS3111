@@ -7,6 +7,8 @@ class Integrador : public CircuitoSISO
 public:
     Integrador();
     virtual ~Integrador();
+
+    Sinal *processar(Sinal *sinalIN);
 };
 
 #endif
