@@ -3,9 +3,8 @@
 #include "CircuitoSISO.h"
 
 class Amplificador : public CircuitoSISO {
-private:
+protected:
     double ganho;
-
 public:
     Amplificador(double ganho);
     virtual ~Amplificador();

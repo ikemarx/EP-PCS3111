@@ -6,8 +6,6 @@
 
 class CircuitoSISO : public Circuito
 {
-private:
-    
 public:
     CircuitoSISO();
     virtual ~CircuitoSISO();

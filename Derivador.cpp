@@ -5,19 +5,13 @@ Derivador::Derivador() {
 }
 
 Derivador::~Derivador() {
-
 }
 
-Sinal *Derivador::processar(Sinal *sinalIN) {
-    double* derivado = new double[sinalIN->getComprimento()];
+Sinal* processar(Sinal *sinalIN) {
+    double* derivado = sinalIN->getSequencia();
     double* sequencia = sinalIN->getSequencia();
-    derivado[0] = sequencia[0];
-    
-    for (int i = 1; i < (sinalIN->getComprimento()) - 1; i++) {
-        derivado[i] = sequencia[i + 1] - sequencia[i];
+    for (int i = 0; i < sinalIN->getComprimento(); i++) {
+        derivado[i + 1] -= sequencia[i];
     }
-
-    Sinal* sinalOUT = new Sinal(derivado, sinalIN->getComprimento());
-
-    return sinalOUT;
+    return new Sinal(derivado, sinalIN->getComprimento());
 }

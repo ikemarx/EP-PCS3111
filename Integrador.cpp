@@ -8,17 +8,10 @@ Integrador::~Integrador() {
 
 }
 
-Sinal *Integrador::processar(Sinal *sinalIN) {
-    int comprimento = sinalIN->getComprimento();
+Sinal* processar(Sinal *sinalIN) {
     double* sequencia = sinalIN->getSequencia();
-    double* integrado = new double[comprimento];
-    integrado[0] = sequencia[0];
-
-    for (int i = 1; i < comprimento; i++) {
-        integrado[i] = integrado[i] + sequencia[i - 1];
+    for (int i = 0; i < sinalIN->getComprimento(); i++) {
+        sequencia[i + 1] += sequencia[i];
     }
-
-    Sinal* sinalOUT = new Sinal(integrado, comprimento);
-
-    return sinalOUT;
+    return new Sinal(sequencia, sinalIN->getComprimento());
 }
