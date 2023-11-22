@@ -11,7 +11,7 @@ private:
 public:
     CircuitoSISO();
     virtual ~CircuitoSISO();
-    Sinal* processar(Sinal* sinalIN); // abstrato
+    virtual Sinal* processar(Sinal* sinalIN) = 0; // abstrato
 };
 
 #endif
