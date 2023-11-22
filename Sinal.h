@@ -2,6 +2,7 @@
 #define SINAL_H
 
 #include "Grafico.h"
+#include<stdexcept>
 #include <string>
 using namespace std;
 
