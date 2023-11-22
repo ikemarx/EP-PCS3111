@@ -1,14 +1,12 @@
 #include "Somador.h"
 
 Somador::Somador() {
-
 }
 
 Somador::~Somador() {
-
 }
 
-Sinal *Somador::processar(Sinal *sinalIN1, Sinal *sinalIN2) {
+Sinal* processar(Sinal *sinalIN1, Sinal *sinalIN2) {
     int comprimento;
     double* seq1 = sinalIN1->getSequencia();
     double* seq2 = sinalIN2->getSequencia();
@@ -22,8 +20,5 @@ Sinal *Somador::processar(Sinal *sinalIN1, Sinal *sinalIN2) {
     for (int i = 0; i < comprimento; i++) {
         somado[i] = seq1[i] + seq2[i];
     }
-
-    Sinal* sinalOUT = new Sinal(somado, comprimento);
-
-    return sinalOUT; 
+    return new Sinal(somado, comprimento);
 }
