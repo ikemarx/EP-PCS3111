@@ -8,7 +8,8 @@ using namespace std;
 class Circuito
 {
 protected:
-    static int ID;
+    static int ultimoID;
+    int ID;
 public:
     Circuito();
     virtual ~Circuito() = 0;
