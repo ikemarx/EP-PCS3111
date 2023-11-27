@@ -8,6 +8,8 @@ protected:
 public:
     ModuloRealimentado();
     virtual ~ModuloRealimentado();
+
+    Sinal *processar(Sinal *sinalIN);
 };
 
 #endif
