@@ -8,7 +8,7 @@ ModuloRealimentado::~ModuloRealimentado()
 {
 }
 
-Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
+/* Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
     double sequenciaOUT[sinalIN->getComprimento()];
     sequenciaOUT[0] = ganho * sinalIN->getSequencia()[0];
     for (int i = 1; i < sinalIN->getComprimento(); i++) {
@@ -16,4 +16,4 @@ Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
     }
     Sinal* sinalOUT = new Sinal(sequenciaOUT, sinalIN->getComprimento());
     return sinalOUT;
-}
+} */
