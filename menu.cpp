@@ -1,4 +1,4 @@
-/* #include "Amplificador.h"
+#include "Amplificador.h"
 #include "Derivador.h"
 #include "Grafico.h"
 #include "Integrador.h"
@@ -27,7 +27,7 @@ void menu() {
         cout << "Qual o ganho do acelerador?" << endl;
         cout << "g = ";
         cin >> ganho;
-        ModuloRealimentado* pilotoautomatico = new ModuloRealimentado(ganho);
+        ModuloRealimentado* pilotoautomatico = new ModuloRealimentado();
         pilotoautomatico->processar(sinal)->imprimir("Velocidade do Carro");
         delete pilotoautomatico;
     }
@@ -110,4 +110,4 @@ void novaOperacao(Sinal *sinalIN) {
     }
     if (escolha == 1)
         novaOperacao(sinalIN);
-} */
+}

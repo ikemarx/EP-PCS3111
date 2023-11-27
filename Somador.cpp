@@ -6,7 +6,7 @@ Somador::Somador() {
 Somador::~Somador() {
 }
 
-Sinal* processar(Sinal *sinalIN1, Sinal *sinalIN2) {
+Sinal* Somador::processar(Sinal *sinalIN1, Sinal *sinalIN2) {
     int comprimento;
     double* seq1 = sinalIN1->getSequencia();
     double* seq2 = sinalIN2->getSequencia();
