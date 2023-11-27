@@ -27,9 +27,9 @@ void menu() {
         cout << "Qual o ganho do acelerador?" << endl;
         cout << "g = ";
         cin >> ganho;
-        ModuloRealimentado* pilotoautomatico = new ModuloRealimentado(ganho);
-        pilotoautomatico->processar(sinal)->imprimir("Velocidade do Carro");
-        delete pilotoautomatico;
+       // ModuloRealimentado* pilotoautomatico = new ModuloRealimentado(ganho);
+       // pilotoautomatico->processar(sinal)->imprimir("Velocidade do Carro");
+       // delete pilotoautomatico;
     }
     if (escolha == 2)
         novaOperacao(sinal);
@@ -88,8 +88,8 @@ void novaOperacao(Sinal *sinalIN) {
     if (escolha == 2) {
         cout << "Informe mais um sinal para ser somado." << endl;
         sinal2 = novoSinal();
-        Somador* somador = new Somador();
-        sinalIN = somador->processar(sinal2, sinalIN);
+      //  Somador* somador = new Somador();
+      //  sinalIN = somador->processar(sinal2, sinalIN);
     }
     if (escolha == 3) {
         Derivador* derivador = new Derivador();
