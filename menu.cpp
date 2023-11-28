@@ -27,7 +27,7 @@ void menu() {
         cout << "Qual o ganho do acelerador?" << endl;
         cout << "g = ";
         cin >> ganho;
-        ModuloRealimentado* pilotoautomatico = new ModuloRealimentado(ganho);
+        ModuloRealimentado* pilotoautomatico = new ModuloRealimentado();
         pilotoautomatico->processar(sinal)->imprimir("Velocidade do Carro");
         delete pilotoautomatico;
     }
