@@ -10,6 +10,8 @@ private:
 public:
     ModuloEmParalelo();
     virtual ~ModuloEmParalelo();
+
+    Sinal* processar(Sinal* SinalIN);
 };
 
 #endif
