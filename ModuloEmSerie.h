@@ -5,8 +5,7 @@
 
 class ModuloEmSerie : public Modulo
 {
-private:
-    
+protected:
 public:
     ModuloEmSerie();
     virtual ~ModuloEmSerie();

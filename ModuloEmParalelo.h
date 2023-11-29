@@ -7,7 +7,6 @@
 class ModuloEmParalelo : public Modulo
 {
 private:
-    
 public:
     ModuloEmParalelo();
     virtual ~ModuloEmParalelo();

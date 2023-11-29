@@ -10,7 +10,6 @@ protected:
     Amplificador* inversor;
     Somador* somador;
     Piloto* piloto;
-    
 public:
     ModuloRealimentado(double ganho);
     virtual ~ModuloRealimentado();

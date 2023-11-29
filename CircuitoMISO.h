@@ -6,8 +6,8 @@
 
 class CircuitoMISO : public Circuito
 {
-private:
-    
+protected:
+    static string modID;
 public:
     CircuitoMISO();
     virtual ~CircuitoMISO();
