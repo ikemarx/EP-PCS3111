@@ -8,10 +8,11 @@ Derivador::~Derivador() {
 }
 
 Sinal* Derivador::processar(Sinal *sinalIN) {
-    double* derivado = sinalIN->getSequencia();
+    double* derivado = new double[sinalIN->getComprimento()];
     double* sequencia = sinalIN->getSequencia();
-    for (int i = 0; i < sinalIN->getComprimento(); i++) {
-        derivado[i + 1] -= sequencia[i];
+    derivado[0] = sequencia[0];
+    for (int i = 1; i < sinalIN->getComprimento(); i++) {
+        derivado[i] = sequencia[i] - sequencia[i-1];
     }
     return new Sinal(derivado, sinalIN->getComprimento());
 }
