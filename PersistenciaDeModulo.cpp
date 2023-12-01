@@ -10,18 +10,16 @@ PersistenciaDeModulo::~PersistenciaDeModulo()
 
 void PersistenciaDeModulo::salvarEmArquivo(Modulo *mod)
 {
-    ifstream input;
-    list<CircuitoSISO*>* circuitos = mod->getCircuitos();
-    list<CircuitoSISO*>::iterator i = circuitos->begin();
-    input.open(nomeDoArquivo);
-    while(i != circuitos->end()) {
-        
-        i++;
-    }
-    
+    // fazer um iterador aqui da lista circuitoSISO
+    if (dynamic_cast<ModuloEmSerie*>(*i))
+        cout << "S" << endl;
 }
 
 Modulo *PersistenciaDeModulo::lerDeArquivo()
 {
     return nullptr;
+}
+
+void fodase() {
+
 }
