@@ -6,37 +6,114 @@
 #include "Piloto.h"
 #include "Sinal.h"
 #include "Somador.h"
+#include "Circuito.h"
+#include "CircuitoMISO.h"
+#include "CircuitoSISO.h"
+#include "Modulo.h"
+#include "ModuloEmParalelo.h"
+#include "ModuloEmSerie.h"
+#include "PersistenciaDeModulo.h"
 #include <cmath>
 #include <iostream>
 using namespace std;
 
-Sinal* novoSinal(); // implementarei aqui mesmo pq n vejo onde mais seria
-void novaOperacao(Sinal *sinalIN);
+void i(string);
+void o(string);
+Sinal* novaOperacao(Sinal*sinal, Modulo*modulo);
+Sinal* novoSinal();
 
 void menu() {
+
+    Modulo* modulo;
+    Sinal* sinal;
+    PersistenciaDeModulo* persistencia;
     int escolha;
-    double ganho;
-    cout << "\tSimulink em C++" << endl;
+    double sequencia[60], a;
+    string nomeArquivo;
+
+
+{ // inicio ---------------------------------------------------------------------------------------------------
+    cout << "\tSimulink em C++" << endl; 
     cout << "Qual simulacao gostaria de fazer?" << endl;
     cout << "1) Piloto Automatico" << endl; 
     cout << "2) Sua propria sequencia de operacoes" << endl;
     cout << "Escolha: ";
     cin >> escolha;
-    Sinal *sinal = novoSinal();
-    if (escolha == 1) {
-        cout << "Qual o ganho do acelerador?" << endl;
-        cout << "g = ";
-        cin >> ganho;
-        ModuloRealimentado* pilotoautomatico = new ModuloRealimentado();
-        pilotoautomatico->processar(sinal)->imprimir("Velocidade do Carro");
-        delete pilotoautomatico;
-    }
-    if (escolha == 2)
-        novaOperacao(sinal);
 }
 
-// implementacao de novoSinal conforme item 3.4
-Sinal *novoSinal() {
+{ // criacao de um novo sinal
+    sinal = novoSinal();
+}
+
+{ // simulacao 1 -----------------------------------------------------------------------------------------------
+    if (escolha == 1) {
+    i("Qual o nome do arquivo a ser lido?");
+    o("Nome: ");
+    cin >> nomeArquivo;
+    
+    persistencia = new PersistenciaDeModulo(nomeArquivo);
+    (persistencia->lerDeArquivo())->processar(sinal);
+    }
+}
+    
+{ // simulacao 2 -----------------------------------------------------------------------------------------------
+    if (escolha == 2) {
+        int escolhaOperacoes;
+        i("Qual estrutura de operacoes voce deseja ter como base?");
+        i("1) Operacoes em serie nao realimentadas");
+        i("2) Operacoes em paralelo nao realimendadas");
+        i("3) Operacoes em serie realimentadas");
+        o("Escolha: ");
+        cin >> escolhaOperacoes;
+        
+        if (escolhaOperacoes == 1) {
+            ModuloEmSerie* modulo = new ModuloEmSerie();
+        }
+
+        if (escolhaOperacoes == 2) {
+            ModuloEmParalelo* modulo = new ModuloEmParalelo();
+        }
+
+        if (escolhaOperacoes == 3) {
+            ModuloRealimentado* modulo = new ModuloRealimentado();
+        }
+
+        { // processo de aquisicao de uma nova operacao ---------------------------------------------------------
+        novaOperacao(sinal, modulo);
+        }
+
+        i("Voce gostaria de salvar o circuito em um novo arquivo?");
+        i("1) Sim");
+        i("2) Nao");
+        o("Escolha: ");
+        cin >> escolhaOperacoes;
+
+        if (escolha == 1) {
+            i("Qual o nome do arquivo a ser escrito?");
+            o("Nome: ");
+            cin >> nomeArquivo;
+
+            persistencia = new PersistenciaDeModulo(nomeArquivo);
+            persistencia->salvarEmArquivo(modulo);
+            delete modulo;
+        }
+    }
+}
+
+}
+
+//--------------------------------------------------------------------------------
+
+void o(string p) { // imprime sem pular linha
+    cout << p;
+}
+
+void i(string p) { // imprime pulando linha
+    cout << p;
+    cout << endl;
+}
+
+Sinal *novoSinal() { // cria um novo sinal
     int escolha;
     double c;
     double a;
@@ -47,67 +124,71 @@ Sinal *novoSinal() {
     cout << "3) rampa" << endl;
     cout << "Escolha: ";
     cin >> escolha;
+
     if (escolha == 1)
-        for (int n = 0; n < 59; n++)
+        for (int n = 0; n < 60; n++)
             sequencia[n] = 5 + 3 * cos(n * M_PI / 8);
+
     if (escolha == 2) {
         cout << "Qual o valor dessa constante?" << endl;
         cout << "c = ";
         cin >> c;
-        for (int i = 0; i < 59; i++)
+        for (int i = 0; i < 60; i++)
             sequencia[i] = c;
     }
+
     if (escolha == 3) {
         cout << "Qual a inclinacao dessa rampa?" << endl;
         cout << "a = ";
         cin >> a;
-        for (int i = 0; i < 59; i++)
+        for (int i = 0; i < 60; i++)
             sequencia[i] = i * a;
     }
     return new Sinal(sequencia, 60);
 }
 
-void novaOperacao(Sinal *sinalIN) {
-    int escolha;
-    double ganho;
-    Sinal* sinal2;
-    cout << "Qual operacao voce gostaria de fazer?" << endl;
-    cout << "1) Amplificar" << endl;
-    cout << "2) Somar" << endl;
-    cout << "3) Derivar" << endl;
-    cout << "4) Integrar" << endl;
-    cout << "Escolha: ";
-    cin >> escolha;
-    if (escolha == 1) {
-        cout << "Qual o ganho dessa amplificacao?" << endl;
-        cout << "g = ";
-        cin >> ganho;
-        Amplificador* amplificador = new Amplificador(ganho);
-        sinalIN = amplificador->processar(sinalIN);
-    }
-    if (escolha == 2) {
-        cout << "Informe mais um sinal para ser somado." << endl;
-        sinal2 = novoSinal();
-        Somador* somador = new Somador();
-        sinalIN = somador->processar(sinal2, sinalIN);
-    }
-    if (escolha == 3) {
-        Derivador* derivador = new Derivador();
-        sinalIN = derivador->processar(sinalIN);
-    }
-    if (escolha == 4) {
-        Integrador* integrador = new Integrador();
-        sinalIN = integrador->processar(sinalIN);
-    }
-    cout << "O que voce quer fazer agora?" << endl;
-    cout << "1) Realizar mais uma operacao no resultado" << endl;
-    cout << "2) Imprimir o resultado para terminar" << endl;
-    cout << "Escolha: ";
-    cin >> escolha;
-    if (escolha == 2) {
-        sinalIN->imprimir("Resultado Final");
-        delete sinalIN;
-    }
-    if (escolha == 1)
-        novaOperacao(sinalIN);
+Sinal* novaOperacao(Sinal*sinalIN, Modulo* modulo) { // realiza operacoes com o sinal
+    int escolhaOperacoes;
+    double g;
+
+        i("Qual operacao voce gostaria de fazer?");
+        i("1) Amplificar");
+        i("2) Derivar");
+        i("3) Integrar");
+        o("Escolha: ");
+        cin >> escolhaOperacoes;
+
+        if (escolhaOperacoes == 1) { // amplifica
+            i("Qual o ganho dessa amplificacao?");
+            o("g = ");
+            cin >> g;
+            Amplificador* amplificador = new Amplificador(g);
+            modulo->adicionar(amplificador);
+        }
+
+        if (escolhaOperacoes == 2) { // deriva
+            Derivador* derivador = new Derivador();
+            modulo->adicionar(derivador);
+        }
+
+        if (escolhaOperacoes == 3) { // integra
+            Integrador* integrador = new Integrador();
+            modulo->adicionar(integrador);
+        }
+
+        i("O que voce quer fazer agora?");
+        i("1) Realizar mais uma operacao no resultado");
+        i("Imprimir o resultado");
+        o("Escolha: ");
+        cin >> escolhaOperacoes;
+
+        if(escolhaOperacoes == 1) {
+            novaOperacao(sinalIN, modulo);
+        }
+
+        if (escolhaOperacoes == 2) {
+            modulo->processar(sinalIN);
+            sinalIN->imprimir("Resultado Final");
+            delete sinalIN;
+        }
 }
