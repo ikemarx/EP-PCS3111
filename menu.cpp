@@ -42,7 +42,12 @@ void menu() {
 }
 
 { // criacao de um novo sinal
+    try {
     sinal = novoSinal();
+    } catch(invalid_argument *e) {
+        cout << e->what();
+        delete e;
+    }
 }
 
 { // simulacao 1 -----------------------------------------------------------------------------------------------
@@ -50,9 +55,18 @@ void menu() {
     i("Qual o nome do arquivo a ser lido?");
     o("Nome: ");
     cin >> nomeArquivo;
-    
-    persistencia = new PersistenciaDeModulo(nomeArquivo);
-    (persistencia->lerDeArquivo())->processar(sinal);
+        try {
+        persistencia = new PersistenciaDeModulo(nomeArquivo);
+        } catch (invalid_argument *e) {
+            cout << e->what();
+            delete e;
+        }
+        try {
+        (persistencia->lerDeArquivo())->processar(sinal);
+        } catch (logic_error *e) {
+            cout << e->what();
+            delete e;
+        }
     }
 }
     
@@ -93,7 +107,13 @@ void menu() {
             o("Nome: ");
             cin >> nomeArquivo;
 
+            try {
             persistencia = new PersistenciaDeModulo(nomeArquivo);
+            } catch (invalid_argument *e) {
+                cout >> e->what();
+                delete e;
+            }
+            
             persistencia->salvarEmArquivo(modulo);
             delete modulo;
         }
@@ -102,7 +122,7 @@ void menu() {
 
 }
 
-//--------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------
 
 void o(string p) { // imprime sem pular linha
     cout << p;
