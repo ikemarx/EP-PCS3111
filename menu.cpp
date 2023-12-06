@@ -81,15 +81,15 @@ void menu() {
         cin >> escolhaOperacoes;
         
         if (escolhaOperacoes == 1) {
-            ModuloEmSerie* modulo = new ModuloEmSerie();
+            modulo = new ModuloEmSerie();
         }
 
         if (escolhaOperacoes == 2) {
-            ModuloEmParalelo* modulo = new ModuloEmParalelo();
+            modulo = new ModuloEmParalelo();
         }
 
         if (escolhaOperacoes == 3) {
-            ModuloRealimentado* modulo = new ModuloRealimentado();
+            modulo = new ModuloRealimentado();
         }
         Amplificador *amplificador = new Amplificador(0);
         Derivador *derivador = new Derivador();
@@ -167,7 +167,6 @@ Sinal *novoSinal() { // cria um novo sinal
     }
     return new Sinal(sequencia, 60);
 }
-
 void novaOperacao(Sinal*sinalIN, Modulo* modulo, Amplificador* amplificador, Derivador* derivador, Integrador* integrador) { // realiza operacoes com o sinal
     int escolhaOperacoes;
     double g;
@@ -197,7 +196,7 @@ void novaOperacao(Sinal*sinalIN, Modulo* modulo, Amplificador* amplificador, Der
 
         i("O que voce quer fazer agora?");
         i("1) Realizar mais uma operacao no resultado");
-        i("Imprimir o resultado");
+        i("2) Imprimir o resultado");
         o("Escolha: ");
         cin >> escolhaOperacoes;
 
