@@ -1,4 +1,4 @@
-/* #include "PersistenciaDeModulo.h"
+#include "PersistenciaDeModulo.h"
 #include <iostream>
 
 // Função auxiliar para salvar módulos recursivamente
@@ -12,7 +12,7 @@ void salvarModuloRecursivo(ofstream& arquivo, Modulo* mod) {
     }
 
     // Salvar os circuitos internos
-    for (Circuito* circuito : mod->getCircuitosInternos()) {
+    for (Circuito* circuito : mod->getCircuitos()) {
         if (dynamic_cast<Amplificador*>(circuito)) {
             Amplificador* amp = dynamic_cast<Amplificador*>(circuito);
             arquivo << "A " << amp->getGanho() << endl;
@@ -97,4 +97,4 @@ Modulo* PersistenciaDeModulo::lerDeArquivo() {
     input.close();
 
     return mod;
-} */
+}
