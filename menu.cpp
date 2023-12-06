@@ -35,7 +35,7 @@ void menu() {
 { // inicio ---------------------------------------------------------------------------------------------------
     cout << "\tSimulink em C++" << endl; 
     cout << "Qual simulacao gostaria de fazer?" << endl;
-    cout << "1) Piloto Automatico" << endl; 
+    cout << "1) Circuito advindo de arquivo" << endl; 
     cout << "2) Sua propria sequencia de operacoes" << endl;
     cout << "Escolha: ";
     cin >> escolha;
@@ -110,7 +110,7 @@ void menu() {
             try {
             persistencia = new PersistenciaDeModulo(nomeArquivo);
             } catch (invalid_argument *e) {
-                cout >> e->what();
+                cout << e->what();
                 delete e;
             }
             
