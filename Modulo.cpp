@@ -1,6 +1,6 @@
 #include "Modulo.h"
 
-Modulo::Modulo() : circuitos(new list<CircuitoSISO *>) {}
+Modulo::Modulo() : circuitos(new list<CircuitoSISO*>) {}
 
 Modulo::~Modulo()
 {
@@ -21,7 +21,9 @@ void Modulo::imprimir()
 {
     list<CircuitoSISO*>::iterator i = circuitos->begin();
     cout << "Modulo com ID " << ID << " e:" << endl;
-    while (i != circuitos->end())
+    while (i != circuitos->end()) {
         (*i)->imprimir();
+        i++;
+    }
     cout << "--" << endl;
 }
