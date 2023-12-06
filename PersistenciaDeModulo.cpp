@@ -1,4 +1,4 @@
-#include "PersistenciaDeModulo.h"
+/* #include "PersistenciaDeModulo.h"
 #include <iostream>
 
 // Função auxiliar para salvar módulos recursivamente
@@ -97,4 +97,4 @@ Modulo* PersistenciaDeModulo::lerDeArquivo() {
     input.close();
 
     return mod;
-}
+} */
