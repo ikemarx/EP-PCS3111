@@ -91,9 +91,12 @@ void menu() {
         if (escolhaOperacoes == 3) {
             ModuloRealimentado* modulo = new ModuloRealimentado();
         }
-
+        Amplificador *amplificador = new Amplificador(0);
+        Derivador *derivador = new Derivador();
+        Integrador *integrador = new Integrador();
+    
         { // processo de aquisicao de uma nova operacao ---------------------------------------------------------
-        novaOperacao(sinal, modulo);
+        novaOperacao(sinal, modulo, amplificador, derivador, integrador);
         }
 
         i("Voce gostaria de salvar o circuito em um novo arquivo?");
@@ -165,7 +168,7 @@ Sinal *novoSinal() { // cria um novo sinal
     return new Sinal(sequencia, 60);
 }
 
-void novaOperacao(Sinal*sinalIN, Modulo* modulo) { // realiza operacoes com o sinal
+void novaOperacao(Sinal*sinalIN, Modulo* modulo, Amplificador* amplificador, Derivador* derivador, Integrador* integrador) { // realiza operacoes com o sinal
     int escolhaOperacoes;
     double g;
 
@@ -180,17 +183,15 @@ void novaOperacao(Sinal*sinalIN, Modulo* modulo) { // realiza operacoes com o si
             i("Qual o ganho dessa amplificacao?");
             o("g = ");
             cin >> g;
-            Amplificador* amplificador = new Amplificador(g);
+            amplificador->setGanho(g);
             modulo->adicionar(amplificador);
         }
 
         if (escolhaOperacoes == 2) { // deriva
-            Derivador* derivador = new Derivador();
             modulo->adicionar(derivador);
         }
 
         if (escolhaOperacoes == 3) { // integra
-            Integrador* integrador = new Integrador();
             modulo->adicionar(integrador);
         }
 
@@ -209,5 +210,8 @@ void novaOperacao(Sinal*sinalIN, Modulo* modulo) { // realiza operacoes com o si
             sinalIN->imprimir("Resultado Final");
             delete sinalIN;
             delete modulo;
+            delete integrador;
+            delete derivador;
+            delete amplificador;
         }
 }
