@@ -115,7 +115,6 @@ void menu() {
             }
             
             persistencia->salvarEmArquivo(modulo);
-            delete modulo;
         }
     }
 }
@@ -209,5 +208,6 @@ void novaOperacao(Sinal*sinalIN, Modulo* modulo) { // realiza operacoes com o si
             modulo->processar(sinalIN);
             sinalIN->imprimir("Resultado Final");
             delete sinalIN;
+            delete modulo;
         }
 }
