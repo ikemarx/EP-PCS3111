@@ -19,7 +19,7 @@ using namespace std;
 
 void i(string);
 void o(string);
-void novaOperacao(Sinal*sinal, Modulo*modulo, Amplificador* amplificador, Derivador* derivador, Integrador *integrador);
+void novaOperacao(Sinal*sinalIN, Modulo* modulo, Amplificador* amplificador, Derivador* derivador, Integrador* integrador);
 Sinal* novoSinal();
 
 void menu() {
