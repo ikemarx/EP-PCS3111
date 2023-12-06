@@ -13,7 +13,7 @@ void PersistenciaDeModulo::salvarEmArquivo(Modulo *mod)
 
 
     ofstream output;
-    auxilio(mod, output);
+    // auxilio(mod, output);
 
     // fazer um iterador aqui da lista circuitoSISO
 
@@ -24,7 +24,7 @@ Modulo *PersistenciaDeModulo::lerDeArquivo()
     return nullptr;
 }
 
-void auxilio(Modulo* mod, ofstream output) {
+/* void auxilio(Modulo* mod, ofstream output) {
     list<CircuitoSISO*>* circuitos = mod->getCircuitos();
     list<CircuitoSISO*>::iterator i = circuitos->begin();
     while (i != circuitos->end()) {
@@ -54,4 +54,4 @@ void auxilio(Modulo* mod, ofstream output) {
         }
         i++;
     }
-}
+} */
