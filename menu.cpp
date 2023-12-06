@@ -19,7 +19,7 @@ using namespace std;
 
 void i(string);
 void o(string);
-void novaOperacao(Sinal*sinal, Modulo*modulo);
+void novaOperacao(Sinal*sinalIN, Modulo* modulo, Amplificador* amplificador, Derivador* derivador, Integrador* integrador);
 Sinal* novoSinal();
 
 void menu() {
@@ -202,7 +202,7 @@ void novaOperacao(Sinal*sinalIN, Modulo* modulo, Amplificador* amplificador, Der
         cin >> escolhaOperacoes;
 
         if(escolhaOperacoes == 1) {
-            novaOperacao(sinalIN, modulo);
+            novaOperacao(sinalIN, modulo, amplificador, derivador, integrador);
         }
 
         if (escolhaOperacoes == 2) {
