@@ -19,7 +19,7 @@ using namespace std;
 
 void i(string);
 void o(string);
-Sinal* novaOperacao(Sinal*sinal, Modulo*modulo);
+void novaOperacao(Sinal*sinal, Modulo*modulo);
 Sinal* novoSinal();
 
 void menu() {
@@ -133,8 +133,7 @@ Sinal *novoSinal() { // cria um novo sinal
         cout << "Qual o valor dessa constante?" << endl;
         cout << "c = ";
         cin >> c;
-        for (int i = 0; i < 60; i++)
-            sequencia[i] = c;
+        return new Sinal(c, 60);
     }
 
     if (escolha == 3) {
@@ -142,12 +141,12 @@ Sinal *novoSinal() { // cria um novo sinal
         cout << "a = ";
         cin >> a;
         for (int i = 0; i < 60; i++)
-            sequencia[i] = i * a;
+            sequencia[i] = (i + 1) * a;
     }
     return new Sinal(sequencia, 60);
 }
 
-Sinal* novaOperacao(Sinal*sinalIN, Modulo* modulo) { // realiza operacoes com o sinal
+void novaOperacao(Sinal*sinalIN, Modulo* modulo) { // realiza operacoes com o sinal
     int escolhaOperacoes;
     double g;
 
