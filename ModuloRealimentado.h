@@ -3,15 +3,15 @@
 #include "Modulo.h"
 #include "Amplificador.h"
 #include "Somador.h"
-#include "Piloto.h"
+#include "ModuloEmSerie.h"
 
 class ModuloRealimentado : public Modulo {
 protected:
     Amplificador* inversor;
     Somador* somador;
-    Piloto* piloto;
+    ModuloEmSerie* moduloEmSerie;
 public:
-    ModuloRealimentado(double ganho);
+    ModuloRealimentado();
     virtual ~ModuloRealimentado();
 
     Sinal *processar(Sinal *sinalIN);

@@ -1,14 +1,17 @@
 #include "ModuloRealimentado.h"
 
-ModuloRealimentado::ModuloRealimentado(double ganho)
+ModuloRealimentado::ModuloRealimentado()
 {
-    piloto = new Piloto(ganho);
+    moduloEmSerie = new ModuloEmSerie();
     inversor = new Amplificador(-1);
     somador = new Somador();
 }
 
 ModuloRealimentado::~ModuloRealimentado()
 {
+    delete moduloEmSerie;
+    delete inversor;
+    delete somador;
 }
 
 Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
@@ -20,7 +23,7 @@ Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
     
     sequenciaSaidaInvertida[0] = vInicial;
     diferenca = new Sinal(sinalIN->getSequencia(), 1);
-    saida = piloto->processar(diferenca);
+    saida = moduloEmSerie->processar(diferenca);
     delete diferenca;
 
     for (int i = 1; i < sinalIN->getComprimento(); i++) {
@@ -28,7 +31,7 @@ Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
         saidaInvertida = new Sinal(sequenciaSaidaInvertida, i + 1);
         diferenca = somador->processar(sinalIN, saidaInvertida);
         delete saida;
-        saida = piloto->processar(diferenca);
+        saida = moduloEmSerie->processar(diferenca);
         delete saidaInvertida;
         delete diferenca;
     }
