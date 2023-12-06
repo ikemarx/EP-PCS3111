@@ -3,6 +3,7 @@
         "array": "cpp",
         "any": "cpp",
         "string_view": "cpp",
-        "span": "cpp"
+        "span": "cpp",
+        "fstream": "cpp"
     }
 }
