@@ -72,23 +72,21 @@ Modulo* lerModuloRecursivo(ifstream& input) {
     
 }
 
-PersistenciaDeModulo::PersistenciaDeModulo(string nomeDoArquivo) : nomeDoArquivo(nomeDoArquivo) {
+PersistenciaDeModulo::PersistenciaDeModulo(string nomeDoArquivo) : nomeDoArquivo(nomeDoArquivo) {}
+
+PersistenciaDeModulo::~PersistenciaDeModulo() {}
+
+void PersistenciaDeModulo::salvarEmArquivo(Modulo* mod) {
     output.open(nomeDoArquivo);
     if (!output.is_open()) {
         throw new invalid_argument("Erro ao abrir o arquivo");
     }
-}
-
-PersistenciaDeModulo::~PersistenciaDeModulo() {
+    salvarModuloRecursivo(output, mod);
     output.close();
 }
 
-void PersistenciaDeModulo::salvarEmArquivo(Modulo* mod) {
-    salvarModuloRecursivo(output, mod);
-}
-
 Modulo* PersistenciaDeModulo::lerDeArquivo() {
-    ifstream input(nomeDoArquivo);
+    input.open(nomeDoArquivo);
     if (!input.is_open()) {
         throw new invalid_argument("Erro ao abrir o arquivo");
     }
