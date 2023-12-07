@@ -64,10 +64,8 @@ void menu() {
             return;
         }
 
-        Modulo* loadedModulo = nullptr;
-
         try {
-            loadedModulo = persistencia->lerDeArquivo();
+            modulo = persistencia->lerDeArquivo();
         } catch (logic_error* e) {
             cout << e->what() << endl;
             delete e;
@@ -76,34 +74,9 @@ void menu() {
             return;
         }
 
-        loadedModulo->processar(sinal);
+        modulo->processar(sinal);
         sinal->imprimir("Resultado Final");
-
-        i("Voce gostaria de salvar o circuito em um novo arquivo?");
-        i("1) Sim");
-        i("2) Nao");
-        o("Escolha: ");
-        cin >> escolha;
-
-        if (escolha == 1) {
-            i("Qual o nome do arquivo a ser escrito?");
-            o("Nome: ");
-            cin >> nomeArquivo;
-
-            try {
-                persistencia = new PersistenciaDeModulo(nomeArquivo);
-            } catch (invalid_argument* e) {
-                cout << e->what() << endl;
-                delete e;
-            }
-
-            if (persistencia != nullptr) {
-                persistencia->salvarEmArquivo(loadedModulo);
-                delete persistencia;
-            }
-        }
-
-        delete loadedModulo;
+        salvar(modulo);
         escolha = 0;
     }
 
@@ -129,30 +102,7 @@ void menu() {
 
         // processo de aquisicao de uma nova operacao
         novaOperacao(sinal, modulo, amplificador, derivador, integrador);
-
-        i("Voce gostaria de salvar o circuito em um novo arquivo?");
-        i("1) Sim");
-        i("2) Nao");
-        o("Escolha: ");
-        cin >> escolha;
-
-        if (escolha == 1) {
-            i("Qual o nome do arquivo a ser escrito?");
-            o("Nome: ");
-            cin >> nomeArquivo;
-
-            try {
-                persistencia = new PersistenciaDeModulo(nomeArquivo);
-            } catch (invalid_argument* e) {
-                cout << e->what() << endl;
-                delete e;
-            }
-
-            if (persistencia != nullptr) {
-                persistencia->salvarEmArquivo(modulo);
-                delete persistencia;
-            }
-        }
+        salvar(modulo);
     }
 
     delete sinal;
@@ -244,4 +194,34 @@ void novaOperacao(Sinal* sinalIN, Modulo* modulo, Amplificador* amplificador, De
         delete derivador;
         delete amplificador;
     }
+}
+
+void salvar(Modulo* modulo) {
+    int escolha;
+    string nomeArquivo;
+    PersistenciaDeModulo* persistencia = nullptr;
+    
+        i("Voce gostaria de salvar o circuito em um novo arquivo?");
+        i("1) Sim");
+        i("2) Nao");
+        o("Escolha: ");
+        cin >> escolha;
+
+        if (escolha == 1) {
+            i("Qual o nome do arquivo a ser escrito?");
+            o("Nome: ");
+            cin >> nomeArquivo;
+
+            try {
+                persistencia = new PersistenciaDeModulo(nomeArquivo);
+            } catch (invalid_argument* e) {
+                cout << e->what() << endl;
+                delete e;
+            }
+
+            if (persistencia != nullptr) {
+                persistencia->salvarEmArquivo(modulo);
+                delete persistencia;
+            }
+        }
 }
