@@ -2,37 +2,38 @@
 #include <iostream>
 
 // Função auxiliar para salvar módulos recursivamente
-void salvarModuloRecursivo(ofstream& arquivo, Modulo* mod) {
+void salvarModuloRecursivo(ofstream& output, Modulo* mod) {
     if (dynamic_cast<ModuloEmSerie*>(mod)) {
-        arquivo << "S" << endl;
+        output << "S" << endl;
     } else if (dynamic_cast<ModuloEmParalelo*>(mod)) {
-        arquivo << "P" << endl;
+        output << "P" << endl;
     } else if (dynamic_cast<ModuloRealimentado*>(mod)) {
-        arquivo << "R" << endl;
+        output << "R" << endl;
     }
-
     // Salvar os circuitos internos
-    for (Circuito* circuito : mod->getCircuitos()) {
-        if (dynamic_cast<Amplificador*>(circuito)) {
-            Amplificador* amp = dynamic_cast<Amplificador*>(circuito);
-            arquivo << "A " << amp->getGanho() << endl;
-        } else if (dynamic_cast<Integrador*>(circuito)) {
-            arquivo << "I" << endl;
-        } else if (dynamic_cast<Derivador*>(circuito)) {
-            arquivo << "D" << endl;
-        } else if (Modulo* subModulo = dynamic_cast<Modulo*>(circuito)) {
+    list<CircuitoSISO*>* circuitos = mod->getCircuitos();
+    list<CircuitoSISO*>::iterator i = circuitos->begin();
+    while (i != circuitos->end()) {
+        if (dynamic_cast<Amplificador*>(*i)) {
+            Amplificador* amp = dynamic_cast<Amplificador*>(*i);
+            output << "A " << amp->getGanho() << endl;
+        } else if (dynamic_cast<Integrador*>(*i)) {
+            output << "I" << endl;
+        } else if (dynamic_cast<Derivador*>(*i)) {
+            output << "D" << endl;
+        } else if (Modulo* subModulo = dynamic_cast<Modulo*>(*i)) {
             // Chamar recursivamente para ler submódulos
-            salvarModuloRecursivo(arquivo, subModulo);
+            salvarModuloRecursivo(output, subModulo);
         }
+        i++;
     }
-
-    arquivo << "f" << endl; // Indica o final do módulo
+    output << "f" << endl; // Indica o final do módulo
 }
 
 // Função auxiliar para ler módulos recursivamente
-Modulo* lerModuloRecursivo(ifstream& arquivo) {
+Modulo* lerModuloRecursivo(ifstream& input) {
     string tipo;
-    arquivo >> tipo;
+    input >> tipo;
 
     Modulo* mod = nullptr;
 
@@ -46,11 +47,11 @@ Modulo* lerModuloRecursivo(ifstream& arquivo) {
 
     // Ler os circuitos internos
     while (true) {
-        arquivo >> tipo;
+        input >> tipo;
 
         if (tipo == "A") {
             double ganho;
-            arquivo >> ganho;
+            input >> ganho;
             mod->adicionar(new Amplificador(ganho));
         } else if (tipo == "I") {
             mod->adicionar(new Integrador());
@@ -58,38 +59,36 @@ Modulo* lerModuloRecursivo(ifstream& arquivo) {
             mod->adicionar(new Derivador());
         } else if (tipo == "S" || tipo == "P" || tipo == "R") {
             // Chamada recursiva para ler submódulos
-            Modulo* subModulo = lerModuloRecursivo(arquivo);
+            Modulo* subModulo = lerModuloRecursivo(input);
             mod->adicionar(subModulo);
         } else if (tipo == "f") {
             // Indica o final do módulo
-            break;
+            return mod;
         } else {
-            throw logic_error("Formato incorreto do arquivo");
+            throw new logic_error("Formato incorreto do arquivo");
         }
     }
 
-    return mod;
+    
 }
 
-PersistenciaDeModulo::PersistenciaDeModulo(string nomeDoArquivo) : nomeDoArquivo(nomeDoArquivo) {
+PersistenciaDeModulo::PersistenciaDeModulo(string nomeDoArquivo) : nomeDoArquivo(nomeDoArquivo) {}
+
+PersistenciaDeModulo::~PersistenciaDeModulo() {}
+
+void PersistenciaDeModulo::salvarEmArquivo(Modulo* mod) {
     output.open(nomeDoArquivo);
     if (!output.is_open()) {
-        throw invalid_argument("Erro ao abrir o arquivo");
+        throw new invalid_argument("Erro ao abrir o arquivo");
     }
-}
-
-PersistenciaDeModulo::~PersistenciaDeModulo() {
+    salvarModuloRecursivo(output, mod);
     output.close();
 }
 
-void PersistenciaDeModulo::salvarEmArquivo(Modulo* mod) {
-    salvarModuloRecursivo(output, mod);
-}
-
 Modulo* PersistenciaDeModulo::lerDeArquivo() {
-    ifstream input(nomeDoArquivo);
+    input.open(nomeDoArquivo);
     if (!input.is_open()) {
-        throw invalid_argument("Erro ao abrir o arquivo");
+        throw new invalid_argument("Erro ao abrir o arquivo");
     }
 
     Modulo* mod = lerModuloRecursivo(input);
