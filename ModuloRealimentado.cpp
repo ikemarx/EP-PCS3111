@@ -37,3 +37,12 @@ Sinal *ModuloRealimentado::processar(Sinal *sinalIN) {
     }
     return saida;
 }
+
+void ModuloRealimentado::adicionar(CircuitoSISO *circ) {
+    moduloEmSerie->adicionar(circ);
+}
+
+list<CircuitoSISO *> *ModuloRealimentado::getCircuitos()
+{
+    return moduloEmSerie->getCircuitos();
+}

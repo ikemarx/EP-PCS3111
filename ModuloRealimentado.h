@@ -15,6 +15,8 @@ public:
     virtual ~ModuloRealimentado();
 
     Sinal *processar(Sinal *sinalIN);
+    void adicionar(CircuitoSISO* circ);
+    list<CircuitoSISO*>* getCircuitos();
 };
 
 #endif
