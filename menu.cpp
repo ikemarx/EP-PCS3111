@@ -15,95 +15,75 @@
 #include "PersistenciaDeModulo.h"
 #include <cmath>
 #include <iostream>
+
 using namespace std;
 
 void i(string);
 void o(string);
-void novaOperacao(Sinal*sinal, Modulo*modulo, Amplificador* amplificador, Derivador* derivador, Integrador *integrador);
+void novaOperacao(Sinal* sinalIN, Modulo* modulo, Amplificador* amplificador, Derivador* derivador, Integrador* integrador);
 Sinal* novoSinal();
 
 void menu() {
-
-    Modulo* modulo;
-    Sinal* sinal;
-    PersistenciaDeModulo* persistencia;
     int escolha;
-    double sequencia[60], a;
+    Modulo* modulo = nullptr;
+    Sinal* sinal = nullptr;
+    PersistenciaDeModulo* persistencia = nullptr;
     string nomeArquivo;
+    Amplificador* amplificador = nullptr;
+    Derivador* derivador = nullptr;
+    Integrador* integrador = nullptr;
 
-
-{ // inicio ---------------------------------------------------------------------------------------------------
-    cout << "\tSimulink em C++" << endl; 
+    // inicio
+    cout << "\tSimulink em C++" << endl;
     cout << "Qual simulacao gostaria de fazer?" << endl;
-    cout << "1) Piloto Automatico" << endl; 
+    cout << "1) Circuito advindo de arquivo" << endl;
     cout << "2) Sua propria sequencia de operacoes" << endl;
     cout << "Escolha: ";
     cin >> escolha;
-}
 
-{ // criacao de um novo sinal
+    // criacao de um novo sinal
     try {
-    sinal = novoSinal();
-    } catch(invalid_argument *e) {
-        cout << e->what();
+        sinal = novoSinal();
+    } catch (invalid_argument* e) {
+        cout << e->what() << endl;
         delete e;
+        return;
     }
-}
 
-{ // simulacao 1 -----------------------------------------------------------------------------------------------
+    // simulacao 1
     if (escolha == 1) {
-    i("Qual o nome do arquivo a ser lido?");
-    o("Nome: ");
-    cin >> nomeArquivo;
+        i("Qual o nome do arquivo a ser lido?");
+        o("Nome: ");
+        cin >> nomeArquivo;
         try {
-        persistencia = new PersistenciaDeModulo(nomeArquivo);
-        } catch (invalid_argument *e) {
-            cout << e->what();
+            persistencia = new PersistenciaDeModulo(nomeArquivo);
+        } catch (invalid_argument* e) {
+            cout << e->what() << endl;
             delete e;
-        }
-        try {
-        (persistencia->lerDeArquivo())->processar(sinal);
-        } catch (logic_error *e) {
-            cout << e->what();
-            delete e;
-        }
-    }
-}
-    
-{ // simulacao 2 -----------------------------------------------------------------------------------------------
-    if (escolha == 2) {
-        int escolhaOperacoes;
-        i("Qual estrutura de operacoes voce deseja ter como base?");
-        i("1) Operacoes em serie nao realimentadas");
-        i("2) Operacoes em paralelo nao realimendadas");
-        i("3) Operacoes em serie realimentadas");
-        o("Escolha: ");
-        cin >> escolhaOperacoes;
-        
-        if (escolhaOperacoes == 1) {
-            modulo = new ModuloEmSerie();
+            delete sinal;
+            return;
         }
 
-        if (escolhaOperacoes == 2) {
-            modulo = new ModuloEmParalelo();
+        Modulo* loadedModulo = nullptr;
+
+        try {
+            loadedModulo = persistencia->lerDeArquivo();
+        } catch (logic_error* e) {
+            cout << e->what() << endl;
+            delete e;
+            delete sinal;
+            delete persistencia;
+            return;
         }
 
-        if (escolhaOperacoes == 3) {
-            modulo = new ModuloRealimentado();
-        }
-        Amplificador *amplificador = new Amplificador(0);
-        Derivador *derivador = new Derivador();
-        Integrador *integrador = new Integrador();
-    
-        { // processo de aquisicao de uma nova operacao ---------------------------------------------------------
-        novaOperacao(sinal, modulo, amplificador, derivador, integrador);
-        }
+        loadedModulo->processar(sinal);
+        sinal->imprimir("Resultado Final");
 
         i("Voce gostaria de salvar o circuito em um novo arquivo?");
         i("1) Sim");
         i("2) Nao");
         o("Escolha: ");
-        cin >> escolhaOperacoes;
+        cin >> escolha;
 
         if (escolha == 1) {
             i("Qual o nome do arquivo a ser escrito?");
@@ -111,20 +91,76 @@ void menu() {
             cin >> nomeArquivo;
 
             try {
-            persistencia = new PersistenciaDeModulo(nomeArquivo);
-            } catch (invalid_argument *e) {
-                cout << e->what();
+                persistencia = new PersistenciaDeModulo(nomeArquivo);
+            } catch (invalid_argument* e) {
+                cout << e->what() << endl;
                 delete e;
             }
-            
-            persistencia->salvarEmArquivo(modulo);
+
+            if (persistencia != nullptr) {
+                persistencia->salvarEmArquivo(loadedModulo);
+                delete persistencia;
+            }
+        }
+
+        delete loadedModulo;
+        escolha = 0;
+    }
+
+        // simulacao 2
+    if (escolha == 2) {
+        i("Qual estrutura de operacoes voce deseja ter como base?");
+        i("1) Operacoes em serie nao realimentadas");
+        i("2) Operacoes em paralelo nao realimentadas");
+        i("3) Operacoes em serie realimentadas");
+        o("Escolha: ");
+        cin >> escolha;
+
+        if (escolha == 1) {
+            modulo = new ModuloEmSerie();
+        } else if (escolha == 2) {
+            modulo = new ModuloEmParalelo();
+        } else if (escolha == 3) {
+            modulo = new ModuloRealimentado();
+        }
+        amplificador = new Amplificador(0);
+        derivador = new Derivador();
+        integrador = new Integrador();
+
+        // processo de aquisicao de uma nova operacao
+        novaOperacao(sinal, modulo, amplificador, derivador, integrador);
+
+        i("Voce gostaria de salvar o circuito em um novo arquivo?");
+        i("1) Sim");
+        i("2) Nao");
+        o("Escolha: ");
+        cin >> escolha;
+
+        if (escolha == 1) {
+            i("Qual o nome do arquivo a ser escrito?");
+            o("Nome: ");
+            cin >> nomeArquivo;
+
+            try {
+                persistencia = new PersistenciaDeModulo(nomeArquivo);
+            } catch (invalid_argument* e) {
+                cout << e->what() << endl;
+                delete e;
+            }
+
+            if (persistencia != nullptr) {
+                persistencia->salvarEmArquivo(modulo);
+                delete persistencia;
+            }
         }
     }
-}
 
+    delete sinal;
+    delete modulo;
+    delete integrador;
+    delete derivador;
+    delete amplificador;
 }
-
-//--------------------------------------------------------------------------------------------------------------
 
 void o(string p) { // imprime sem pular linha
     cout << p;
@@ -135,7 +171,7 @@ void i(string p) { // imprime pulando linha
     cout << endl;
 }
 
-Sinal *novoSinal() { // cria um novo sinal
+Sinal* novoSinal() { // cria um novo sinal
     int escolha;
     double c;
     double a;
@@ -144,7 +180,7 @@ Sinal *novoSinal() { // cria um novo sinal
     cout << "1) 5+3*cos(n*pi/8)" << endl;
     cout << "2) constante" << endl;
     cout << "3) rampa" << endl;
-    cout << "Escolha: ";
+    o("Escolha: ");
     cin >> escolha;
 
     if (escolha == 1)
@@ -167,50 +203,45 @@ Sinal *novoSinal() { // cria um novo sinal
     }
     return new Sinal(sequencia, 60);
 }
-void novaOperacao(Sinal*sinalIN, Modulo* modulo, Amplificador* amplificador, Derivador* derivador, Integrador* integrador) { // realiza operacoes com o sinal
-    int escolhaOperacoes;
+
+void novaOperacao(Sinal* sinalIN, Modulo* modulo, Amplificador* amplificador, Derivador* derivador, Integrador* integrador) { // realiza operacoes com o sinal
+    int escolha;
     double g;
 
-        i("Qual operacao voce gostaria de fazer?");
-        i("1) Amplificar");
-        i("2) Derivar");
-        i("3) Integrar");
-        o("Escolha: ");
-        cin >> escolhaOperacoes;
+    i("Qual operacao voce gostaria de fazer?");
+    i("1) Amplificar");
+    i("2) Derivar");
+    i("3) Integrar");
+    o("Escolha: ");
+    cin >> escolha;
 
-        if (escolhaOperacoes == 1) { // amplifica
-            i("Qual o ganho dessa amplificacao?");
-            o("g = ");
-            cin >> g;
-            amplificador->setGanho(g);
-            modulo->adicionar(amplificador);
-        }
+    if (escolha == 1) { // amplifica
+        i("Qual o ganho dessa amplificacao?");
+        o("g = ");
+        cin >> g;
+        amplificador->setGanho(g);
+        modulo->adicionar(amplificador);
+    } else if (escolha == 2) { // deriva
+        modulo->adicionar(derivador);
+    } else if (escolha == 3) { // integra
+        modulo->adicionar(integrador);
+    }
 
-        if (escolhaOperacoes == 2) { // deriva
-            modulo->adicionar(derivador);
-        }
+    i("O que voce quer fazer agora?");
+    i("1) Realizar mais uma operacao no resultado");
+    i("2) Imprimir o resultado");
+    o("Escolha: ");
+    cin >> escolha;
 
-        if (escolhaOperacoes == 3) { // integra
-            modulo->adicionar(integrador);
-        }
-
-        i("O que voce quer fazer agora?");
-        i("1) Realizar mais uma operacao no resultado");
-        i("2) Imprimir o resultado");
-        o("Escolha: ");
-        cin >> escolhaOperacoes;
-
-        if(escolhaOperacoes == 1) {
-            novaOperacao(sinalIN, modulo, amplificador, derivador, integrador);
-        }
-
-        if (escolhaOperacoes == 2) {
-            modulo->processar(sinalIN);
-            sinalIN->imprimir("Resultado Final");
-            delete sinalIN;
-            delete modulo;
-            delete integrador;
-            delete derivador;
-            delete amplificador;
-        }
+    if (escolha == 1) {
+        novaOperacao(sinalIN, modulo, amplificador, derivador, integrador);
+    } else if (escolha == 2) {
+        modulo->processar(sinalIN);
+        sinalIN->imprimir("Resultado Final");
+        delete sinalIN;
+        delete modulo;
+        delete integrador;
+        delete derivador;
+        delete amplificador;
+    }
 }
