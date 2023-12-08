@@ -20,8 +20,9 @@ using namespace std;
 
 void i(string);
 void o(string);
-void novaOperacao(Sinal* sinalIN, Modulo* modulo, Amplificador* amplificador, Derivador* derivador, Integrador* integrador);
+void novaOperacao(Sinal* sinalIN, Modulo* modulo);
 Sinal* novoSinal();
+void salvar(Modulo* modulo);
 
 void menu() {
     int escolha;
@@ -29,9 +30,6 @@ void menu() {
     Sinal* sinal = nullptr;
     PersistenciaDeModulo* persistencia = nullptr;
     string nomeArquivo;
-    Amplificador* amplificador = nullptr;
-    Derivador* derivador = nullptr;
-    Integrador* integrador = nullptr;
 
     // inicio
     cout << "\tSimulink em C++" << endl;
@@ -96,20 +94,14 @@ void menu() {
         } else if (escolha == 3) {
             modulo = new ModuloRealimentado();
         }
-        amplificador = new Amplificador(0);
-        derivador = new Derivador();
-        integrador = new Integrador();
 
         // processo de aquisicao de uma nova operacao
-        novaOperacao(sinal, modulo, amplificador, derivador, integrador);
+        novaOperacao(sinal, modulo);
         salvar(modulo);
     }
 
     delete sinal;
     delete modulo;
-    delete integrador;
-    delete derivador;
-    delete amplificador;
 }
 
 void o(string p) { // imprime sem pular linha
@@ -154,7 +146,7 @@ Sinal* novoSinal() { // cria um novo sinal
     return new Sinal(sequencia, 60);
 }
 
-void novaOperacao(Sinal* sinalIN, Modulo* modulo, Amplificador* amplificador, Derivador* derivador, Integrador* integrador) { // realiza operacoes com o sinal
+void novaOperacao(Sinal* sinalIN, Modulo* modulo) { // realiza operacoes com o sinal
     int escolha;
     double g;
 
@@ -169,12 +161,17 @@ void novaOperacao(Sinal* sinalIN, Modulo* modulo, Amplificador* amplificador, De
         i("Qual o ganho dessa amplificacao?");
         o("g = ");
         cin >> g;
-        amplificador->setGanho(g);
+        Amplificador* amplificador = new Amplificador(g);
         modulo->adicionar(amplificador);
+        delete amplificador;
     } else if (escolha == 2) { // deriva
+        Derivador* derivador = new Derivador();
         modulo->adicionar(derivador);
+        delete derivador;
     } else if (escolha == 3) { // integra
+        Integrador* integrador = new Integrador();
         modulo->adicionar(integrador);
+        delete integrador;
     }
 
     i("O que voce quer fazer agora?");
@@ -184,15 +181,15 @@ void novaOperacao(Sinal* sinalIN, Modulo* modulo, Amplificador* amplificador, De
     cin >> escolha;
 
     if (escolha == 1) {
-        novaOperacao(sinalIN, modulo, amplificador, derivador, integrador);
+        novaOperacao(sinalIN, modulo);
     } else if (escolha == 2) {
-        modulo->processar(sinalIN);
-        sinalIN->imprimir("Resultado Final");
-        delete sinalIN;
-        delete modulo;
-        delete integrador;
-        delete derivador;
-        delete amplificador;
+        try {
+            modulo->processar(sinalIN);
+            sinalIN->imprimir("Resultado Final");
+        } catch (logic_error *e) {
+            cout << e->what() << endl;
+            delete e;
+        }
     }
 }
 
